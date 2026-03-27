@@ -1,0 +1,23 @@
+---
+- name: Playbook with Handlers
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      notify: Restart Nginx
+
+    - name: Update webpage
+      copy:
+        content: "Updated by Ansible Handler Demo - Balogun Ibrahim"
+        dest: /var/www/html/index.html
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

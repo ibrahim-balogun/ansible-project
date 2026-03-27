@@ -1,0 +1,23 @@
+---
+- name: Playbook with Variables
+  hosts: webservers
+  become: yes
+  vars:
+    web_package: nginx
+    web_port: 80
+    owner_name: "Balogun Ibrahim"
+    environment: "Production"
+
+  tasks:
+    - name: Install web package
+      apt:
+        name: "{{ web_package }}"
+        state: present
+
+    - name: Print owner info
+      debug:
+        msg: "This server is managed by {{ owner_name }} in {{ environment }}"
+
+    - name: Print web port
+      debug:
+        msg: "Web server running on port {{ web_port }}"
